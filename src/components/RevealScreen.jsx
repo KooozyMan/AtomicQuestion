@@ -12,6 +12,7 @@ function RevealScreen({
   discussionEndsAt,
 }) {
   const [typedQuestion, setTypedQuestion] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const [now, setNow] = useState(Date.now());
   const revealedCount = players.filter((player) => reveals[player.id]).length;
   const allRevealed = players.length > 0 && revealStep >= players.length;
@@ -24,10 +25,12 @@ function RevealScreen({
   useEffect(() => {
     let index = 0;
     setTypedQuestion('');
+    setIsTyping(true);
     const timer = window.setInterval(() => {
       index += 1;
       setTypedQuestion(question.slice(0, index));
       if (index >= question.length) {
+        setIsTyping(false);
         window.clearInterval(timer);
       }
     }, 28);
@@ -47,7 +50,7 @@ function RevealScreen({
       <h2>Answer Reveal Board</h2>
       <div className="aq-question-banner">
         <span className="aq-question-label">Question</span>
-        <p className="aq-typed">{typedQuestion}</p>
+        <p className={`aq-typed ${isTyping ? '' : 'aq-typed-done'}`}>{typedQuestion}</p>
       </div>
 
       {!allRevealed && (

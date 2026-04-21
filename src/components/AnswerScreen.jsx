@@ -12,15 +12,18 @@ function AnswerScreen({
   canContinue,
 }) {
   const [typedQuestion, setTypedQuestion] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const submittedCount = players.filter((player) => Boolean(answers[player.id]?.submitted)).length;
 
   useEffect(() => {
     let index = 0;
     setTypedQuestion('');
+    setIsTyping(true);
     const timer = window.setInterval(() => {
       index += 1;
       setTypedQuestion(ownQuestion.slice(0, index));
       if (index >= ownQuestion.length) {
+        setIsTyping(false);
         window.clearInterval(timer);
       }
     }, 26);
@@ -35,7 +38,7 @@ function AnswerScreen({
 
       <div className="aq-question-banner">
         <span className="aq-question-label">Your Question</span>
-        <p className="aq-typed">{typedQuestion}</p>
+        <p className={`aq-typed ${isTyping ? '' : 'aq-typed-done'}`}>{typedQuestion}</p>
       </div>
 
       <textarea

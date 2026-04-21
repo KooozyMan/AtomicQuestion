@@ -350,7 +350,10 @@ function App() {
     <main className="aq-shell">
       <header className="aq-topbar">
         <h1>Atomic Question</h1>
-        <span className="aq-badge">{roomCode ? `Room ${roomCode}` : 'Firebase Live'}</span>
+        {roomCode ? (
+          <span className="aq-badge">{roomCode ? `Room ${roomCode}` : 'helo wrld'}</span>
+        ) : 
+        null}
       </header>
 
       {screen === 'home' && (
